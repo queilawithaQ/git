@@ -30,17 +30,6 @@ static void set_first_parent(struct rev_info *revs)
 	revs->first_parent_merges = 1;
 }
 
-static void set_m(struct rev_info *revs)
-{
-	/*
-	 * To "diff-index", "-m" means "match missing", and to the "log"
-	 * family of commands, it means "show default diff for merges". Set
-	 * both fields appropriately.
-	 */
-	set_to_default(revs);
-	revs->match_missing = 1;
-}
-
 static void set_combined(struct rev_info *revs)
 {
 	suppress(revs);
@@ -108,7 +97,7 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
 	const char *arg = argv[0];
 
 	if (!strcmp(arg, "-m")) {
-		set_m(revs);
+		set_to_default(revs);
 	} else if (!strcmp(arg, "-c")) {
 		set_combined(revs);
 		revs->combined_imply_patch = 1;
